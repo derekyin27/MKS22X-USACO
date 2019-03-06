@@ -28,7 +28,18 @@ R = temp.charAt(0);
 C = temp.charAt(1);
 E = temp.charAt(2);
 N = temp.charAt(3);
+String field = "";
+for (int i = 0; i < R; i++){
+  System.out.println(inf.nextLine());
+  field+=inf.nextLine();
+}
 }
 catch (FileNotFoundException e){};
+}
+
+public static void main(String[] args) {
+  USACO test = new USACO("makelake.in");
+
+
 }
 }
