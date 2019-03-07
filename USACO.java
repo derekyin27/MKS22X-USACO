@@ -17,22 +17,11 @@ public USACO(String filename){
   try{
   File text = new File(filename);
   Scanner inf = new Scanner(text);
-  String line = inf.nextLine();
-  String temp = "";
-  for (int i = 0; i < line.length(); i++){
-    if (line.charAt(i) != ' '){
-      temp+=line.charAt(i);
-    }
-  }
-R = temp.charAt(0);
-C = temp.charAt(1);
-E = temp.charAt(2);
-N = temp.charAt(3);
-String field = "";
-for (int i = 0; i < R; i++){
-  System.out.println(inf.nextLine());
-  field+=inf.nextLine();
-}
+  R = inf.nextInt();
+  C = inf.nextInt();
+  E = inf.nextInt();
+  N = inf.nextInt();
+
 }
 catch (FileNotFoundException e){};
 }
