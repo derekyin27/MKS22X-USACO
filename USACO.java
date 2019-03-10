@@ -22,6 +22,24 @@ public class USACO{
       instructions[r][c] = inf.nextInt();
     }
   }
+  int largest;
+  for (int ct = 0; ct<instructions.length; ct++){
+    largest = field[instructions[ct][0]][instructions[ct][1]];
+    for (int r = instructions[ct][0]-1; r<instructions[ct][0]+2; r++){
+      for (int c = instructions[ct][1]-1; c<instructions[ct][1]+2; c++){
+        if (field[r][c] > largest){
+          largest = field[r][c];
+        }
+    }
+  }
+  int stomp = largest - instructions[ct][2];
+  for (int r = instructions[ct][0]-1; r<instructions[ct][0]+2; r++){
+    for (int c = instructions[ct][1]-1; c<instructions[ct][1]+2; c++){
+      if (field[r][c] > stomp){
+        field[r][c] = stomp;
+      }
+  }
+}
 }
 catch (FileNotFoundException e){};
 return 1;
