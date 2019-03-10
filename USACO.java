@@ -15,7 +15,12 @@ public class USACO{
     for (int c = 0; c < field[0].length; c++){
   field[r][c] = inf.nextInt();
     }
-
+  }
+  int[][] instructions = new int[N][3];
+  for (int r = 0; r < instructions.length; r++){
+    for (int c =0; c < instructions[0].length; c++){
+      instructions[r][c] = inf.nextInt();
+    }
   }
 }
 catch (FileNotFoundException e){};
