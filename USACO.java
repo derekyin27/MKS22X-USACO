@@ -56,6 +56,20 @@ return -1;
 }
 
 }
+public static int silver(String filename){
+  try{
+  File text = new File(filename);
+  Scanner inf = new Scanner(text);
+  int N = inf.nextInt();
+  int M = inf.nextInt();
+  int T = inf.nextInt();
+  int[][] field = new int[N][M];
+  for (int r =0; r < field.length; r++){
+    for (int c = 0; c <field[0].length; c++){
+      field[r][c] = inf.nextInt();
+    }
+  }
+}
 
 
 
