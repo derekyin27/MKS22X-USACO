@@ -41,15 +41,27 @@ public class USACO{
   }
 }
 }
-catch (FileNotFoundException e){};
-return 1;
+int volume = 0;
+for (int r = 0; r < R; r++){
+  for (int c =0; c< C; c++){
+    if (field[r][c] < E){
+      volume+=E-field[r][c];
+    }
+  }
+}
+return volume *72*72;
+}
+catch (FileNotFoundException e){System.out.println(e);
+return -1;
+}
+
 }
 
 
 
 
-
 public static void main(String[] args) {
+
 System.out.println(USACO.bronze("makelake.in"));
 
 }
