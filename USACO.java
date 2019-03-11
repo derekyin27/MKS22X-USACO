@@ -90,7 +90,22 @@ public static int silver(String filename){
    }
 
    news[instructions[0]-1][instructions[1]-1] = 1;//setting movement as 1;
-
+for (int time =0; time<T; time++){
+  for (int r = 0; r < news.length; r++){
+    for (int c = 0; c< news[0].length; c++){
+      news[r][c] = old[r][c];
+    }
+  }
+  for (int r =0; r < N; r++){
+    for (int c =0; c<M; c++){
+      if (news[r][c] != -1) news[r][c] = 0;
+      if (c+1< M && news[r][c+1] >= 0) news[r][c]+=old[r][c+1];//checks all possible moves, if next spot is available then add old value to current spot.
+      if (r+1 < N && news[r+1][c] >= 0) news[r][c]+=old[r+1][c];
+      if (c-1>=0 && news[r][c-1] >= 0) news[r][c]+=old[r][c-1];
+      if (r-1>=0 && news[r][r-1] >= 0) news[r][c]+=old[r-1][c];
+    }
+  }
+}
 }
 
 
