@@ -63,12 +63,31 @@ public static int silver(String filename){
   int N = inf.nextInt();
   int M = inf.nextInt();
   int T = inf.nextInt();
-  int[][] field = new int[N][M];
+  char[][] field = new char[N][M];
   for (int r =0; r < field.length; r++){
     for (int c = 0; c <field[0].length; c++){
-      field[r][c] = inf.nextInt();
+      field[r][c] = inf.nextChar();
     }
   }
+   int[] instructions = new int[4];
+   for (int i = 0; i < 4; i++){
+     instructions[i] = inf.nextInt();
+   }
+   int[][] news = new int [N][M];
+   int[][] old = new int [N][M];
+
+   for (int r =0; r< N; r++){
+     for (int c =0; c <M; c++){
+       if (field[r][c]=='*'){
+         news[r][c] = -1;
+         old[r][c] = -1;
+       }
+       if (field[r][c] == '.'){
+         news[r][c] =0;
+         old[r][c] =0;
+       }
+     }
+   }
 }
 
 
