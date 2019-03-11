@@ -63,10 +63,12 @@ public static int silver(String filename){
   int N = inf.nextInt();
   int M = inf.nextInt();//read rows columns etc
   int T = inf.nextInt();
-  char[][] field = new char[N][M];
+  String  line = inf.nextLine();
+  String[][] field = new String[N][M];
   for (int r =0; r < field.length; r++){
+    line = inf.nextLine();
     for (int c = 0; c <field[0].length; c++){
-      field[r][c] = inf.nextChar();//read field into array
+      field[r][c] = line.substring(c, c+1);//read field into array
     }
   }
    int[] instructions = new int[4];
@@ -78,11 +80,11 @@ public static int silver(String filename){
 
    for (int r =0; r< N; r++){
      for (int c =0; c <M; c++){
-       if (field[r][c]=='*'){// setting trees as -1
+       if (field[r][c].equals("*")){// setting trees as -1
          news[r][c] = -1;
          old[r][c] = -1;
        }
-       if (field[r][c] == '.'){//setting open pasture as 0
+       if (field[r][c].equals(".")){//setting open pasture as 0
          news[r][c] =0;
          old[r][c] =0;
        }
@@ -98,13 +100,19 @@ for (int time =0; time<T; time++){
   }
   for (int r =0; r < N; r++){
     for (int c =0; c<M; c++){
-      if (news[r][c] != -1) news[r][c] = 0;
+      if (news[r][c] != -1) {news[r][c] = 0;
       if (c+1< M && news[r][c+1] >= 0) news[r][c]+=old[r][c+1];//checks all possible moves, if next spot is available then add old value to current spot.
       if (r+1 < N && news[r+1][c] >= 0) news[r][c]+=old[r+1][c];
       if (c-1>=0 && news[r][c-1] >= 0) news[r][c]+=old[r][c-1];
       if (r-1>=0 && news[r][r-1] >= 0) news[r][c]+=old[r-1][c];
     }
+    }
   }
+}
+return news[instructions[2]-1][instructions[3]-1];
+}
+catch (FileNotFoundException e){
+  return -1;
 }
 }
 
@@ -114,6 +122,6 @@ for (int time =0; time<T; time++){
 public static void main(String[] args) {
 
 System.out.println(USACO.bronze("makelake.in"));
-
+System.out.println(USACO.silver("ctravel.in"));
 }
 }
