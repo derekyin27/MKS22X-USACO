@@ -57,71 +57,94 @@ return -1;//bad case
 
 }
 public static int silver(String filename){
-  try{
-  File text = new File(filename);
-  Scanner inf = new Scanner(text);// read file
-  int N = inf.nextInt();
-  int M = inf.nextInt();//read rows columns etc
-  int T = inf.nextInt();
-  String  line = inf.nextLine();
-  String[][] field = new String[N][M];
-  for (int r =0; r < field.length; r++){
-    line = inf.nextLine();
-    for (int c = 0; c <field[0].length; c++){
-      field[r][c] = line.substring(c, c+1);//read field into array
-    }
-  }
-   int[] instructions = new int[4];
-   for (int i = 0; i < 4; i++){
-     instructions[i] = inf.nextInt();// place instructions into new array
-   }
-   int[][] news = new int [N][M];//create an old array and a new array. new array is updated every second for T seconds.
-   int[][] old = new int [N][M];
+    try{
+      //set up local variables
+      File file = new File(filename);
+      Scanner scanner = new Scanner(file);
+      int N = Integer.parseInt(scanner.next());
+      int M = Integer.parseInt(scanner.next());
+      int T = Integer.parseInt(scanner.next());
+      //initialize pasture.
+      String nextline = scanner.nextLine();
+      String[][] pasture =  new String[N][M];
+      for (int r = 0; r < N; r++){
+        nextline = scanner.nextLine();
+        for (int c = 0; c < M; c++){
+          pasture[r][c] = nextline.substring(c, c + 1);
+        }
+      }
+      //instructions.
+      int[] instr = new int[4];
+      for (int i = 0; i < instr.length; i++) {
+        instr[i] = scanner.nextInt();
+      }
+      //do instructions.
+      int[][] newpasture = new int[N][M];
+      int[][] oldpasture = new int[N][M];
+      for (int r = 0; r < N; r++){
+        for (int c = 0; c < M; c++){
+          if (pasture[r][c].equals("*")){
+            newpasture[r][c] = -1;
+            oldpasture[r][c] = -1;
+          }else{
+            newpasture[r][c] = 0;
+            oldpasture[r][c] = 0;
+          }
+        }
+      }
+      //testing purposes
+      /*
+      for (int x = 0; x < N; x++){
+        for (int y = 0; y < M; y++){
+          System.out.print(newpasture[x][y]);
+        }
+        System.out.println();
+      }*/
+      newpasture[instr[0] - 1][instr[1] - 1] = 1;
+      for (int time = 0; time < T; time++){
+        setEqual(newpasture, oldpasture);
 
-   for (int r =0; r< N; r++){
-     for (int c =0; c <M; c++){
-       if (field[r][c].equals("*")){// setting trees as -1
-         news[r][c] = -1;
-         old[r][c] = -1;
-       }
-       if (field[r][c].equals(".")){//setting open pasture as 0
-         news[r][c] =0;
-         old[r][c] =0;
-       }
-     }
-   }
+        for (int r = 0; r < N; r++) {
+          for (int c = 0; c < M; c++) {
 
-   news[instructions[0]-1][instructions[1]-1] = 1;//setting movement as 1;
-for (int time =0; time<T; time++){
-  for (int r = 0; r < news.length; r++){
-    for (int c = 0; c< news[0].length; c++){
-      news[r][c] = old[r][c];
+            if (newpasture[r][c] != -1) {
+              newpasture[r][c] = 0;
+
+              if (c + 1 < M && newpasture[r][c + 1] >= 0) {
+                newpasture[r][c] += oldpasture[r][c + 1];
+              }
+
+              if (c - 1 >= 0 && newpasture[r][c - 1] >= 0) {
+                newpasture[r][c] += oldpasture[r][c - 1];
+              }
+
+              if (r - 1 >= 0 && newpasture[r - 1][c] >= 0) {
+                newpasture[r][c] += oldpasture[r - 1][c];
+              }
+
+              if (r + 1 < N && newpasture[r + 1][c] >= 0) {
+                newpasture[r][c] += oldpasture[r + 1][c];
+              }
+            }
+          }
+        }
+      }
+      return newpasture[instr[2] - 1][instr[3] - 1];
     }
+    catch(FileNotFoundException e) {System.out.println("bad filename");return -100000;}
   }
-  for (int r =0; r < N; r++){
-    for (int c =0; c<M; c++){
-      if (news[r][c] != -1) {news[r][c] = 0;
-      if (c+1< M && news[r][c+1] >= 0) news[r][c]+=old[r][c+1];//checks all possible moves, if next spot is available then add old value to current spot.
-      if (r+1 < N && news[r+1][c] >= 0) news[r][c]+=old[r+1][c];
-      if (c-1>=0 && news[r][c-1] >= 0) news[r][c]+=old[r][c-1];
-      if (r-1>=0 && news[r][r-1] >= 0) news[r][c]+=old[r-1][c];
+  private static void setEqual(int[][] one, int[][] two){
+      for (int r = 0; r < one.length; r++) {
+        for (int c = 0; c < one[0].length; c++) {
+          two[r][c] = one[r][c];
+        }
+      }
     }
-    }
-  }
-}
-return news[instructions[2]-1][instructions[3]-1];
-}
-catch (FileNotFoundException e){
-  return -1;
-}
-}
 
 
 
 
 public static void main(String[] args) {
-
-System.out.println(USACO.bronze("makelake.in"));
-System.out.println(USACO.silver("ctravel.in"));
+System.out.println(USACO.silver("makelake.in"));
 }
 }
